@@ -127,10 +127,7 @@ export async function gestorRoutes({ gestorController, gestorView, navigate }) {
       await gestorController.showUnidadesPage({
         onAdd: () => navigate("/unidades/novo"),
         onEdit: (id) => navigate(`/unidades/${id}`),
-        onDelete: (id) => {
-          gestorController.deleteUnidade(id);
-          navigate("/unidades");
-        },
+        onDelete: (id) => gestorController.deleteUnidade(id),
         onView: (id) => navigate(`/unidades/${id}/detalhe`),
       });
       return true;

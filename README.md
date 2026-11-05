@@ -207,3 +207,44 @@ bibliotecas-conectadas/
 ## Bloco de Créditos
 
 - base desenvolvida no PI i-III por Cláudio, Julian, Larissa e equipe, evoluída no PI VI pelo Grupo 1 do PJI610
+
+
+## Dashboard integrado (versão independente)
+
+Esta cópia inclui um dashboard nativo em JavaScript/Web Components, sem depender de incorporação do Power BI. O backend do PI VI já oferece rotas analíticas para indicadores, circulação, rankings, filtros e qualidade do acervo.
+
+### Como executar
+
+1. Instale o Node.js LTS e execute `npm ci` na raiz deste repositório.
+2. Copie `.env.example` para `.env` e configure a **URL raiz** da API, sem `/gestor`:
+
+```env
+VITE_API_URL=https://biblio-webapi.onrender.com
+VITE_ISBN_LOOKUP_ENABLED=true
+```
+
+3. Inicie `npm run dev` e abra `http://localhost:5173/login`.
+4. Entre com uma conta **real da API**, autorizada para gestão (staff ou administrador). O login demonstrativo que aceitava quaisquer credenciais foi removido.
+5. Após autenticar, o navegador abre `/dashboard`. Para sair, use o menu lateral.
+
+O token retornado por `POST /gestor/auth/login/` é guardado no armazenamento da sessão do navegador; as chamadas autenticadas usam `Authorization: Token <token>`. Uma conta técnica de Power BI não substitui uma conta autorizada de usuário no login da aplicação. O backend pode precisar de CORS adicional se este frontend for publicado em um novo domínio. Não commite chaves ou senhas.
+
+### Dados e limitações
+
+- Dashboard: `GET /gestor/analytics/gestao-livros/` e `GET /gestor/analytics/gestao-livros/filtros/`.
+- Resumo geral opcional: `GET /gestor/analytics/resumo/`, para totais gerais de usuários, unidades e movimentações.
+- Filtros: unidade, categoria, ano inicial/final de **publicação** e período de circulação (máximo 36 meses).
+- Gráficos, livros em destaque e tabelas exibem respostas reais da API; registros vazios não são preenchidos com dados simulados.
+- O backend não mantém histórico de cadastro dos livros nem reservas; não confunda publicações por década com crescimento do acervo.
+- Empréstimos recentes não exibem nomes, e-mails ou documentos dos leitores.
+
+### Verificações
+
+```bash
+npm test
+npm run build
+```
+
+Os testes automatizados verificam filtros, segurança de HTML, estados vazios, autenticação HTTP e comportamento do controlador do dashboard. A validação integrada com dados reais depende de uma API disponível e de credenciais autorizadas.
+
+Backend de referência: https://github.com/larissalmg/biblio-webapi-pi6

@@ -24,6 +24,9 @@ jobs:
         run: |
           if npm run | grep -q "lint"; then npm run lint; else echo "sem script lint"; fi
 
+      - name: Testes automatizados
+        run: npm test
+
       - name: Build
         run: |
           if npm run | grep -q "build"; then npm run build; else echo "sem script build"; fi

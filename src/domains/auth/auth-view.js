@@ -8,11 +8,11 @@ export class AuthView {
           <h2>Login</h2>
           <div>
             <label for="username">Usuário:</label>
-            <input type="text" id="username" name="username" placeholder="Digite qualquer usuário" />
+            <input type="text" id="username" name="username" placeholder="Seu usuário de acesso" />
           </div>
           <div>
             <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" placeholder="Digite qualquer senha" />
+            <input type="password" id="password" name="password" placeholder="Sua senha" />
           </div>
           <small id="login-feedback" class="app-inline-feedback" aria-live="polite"></small>
           <button type="submit">Entrar</button>

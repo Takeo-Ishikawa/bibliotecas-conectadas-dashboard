@@ -356,10 +356,8 @@ export class GestorController {
   }
 
   async deleteUnidade(id) {
-    if (confirm("Deseja realmente remover esta unidade?")) {
-      await this.service.removerUnidade(id);
-      await this.showUnidadesPage(this._lastCallbacks || {});
-    }
+    await this.service.removerUnidade(id);
+    await this.showUnidadesPage(this._lastCallbacks || {});
   }
 
   async showUnidadeDetalhe(id) {
