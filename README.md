@@ -248,3 +248,12 @@ npm run build
 Os testes automatizados verificam filtros, segurança de HTML, estados vazios, autenticação HTTP e comportamento do controlador do dashboard. A validação integrada com dados reais depende de uma API disponível e de credenciais autorizadas.
 
 Backend de referência: https://github.com/larissalmg/biblio-webapi-pi6
+
+
+### Solução de problemas no login
+
+Se a tela permanecer em **Validando credenciais**, confira se o arquivo `.env` contém um endereço válido, por exemplo `VITE_API_URL=https://biblio-webapi.onrender.com`. O endereço não deve conter o sufixo `/gestor`. **Reinicie o Vite** após salvar esse arquivo: `Ctrl+C` e `npm.cmd run dev` no PowerShell.
+
+O login exige usuário **staff/admin real**, criado no backend Django, e a API precisa estar acessível. A verificação pode demorar quando o servidor hospedado estiver iniciando. Após aproximadamente oito segundos, a tela informa que está aguardando a API; a tentativa de login tem limite de 45 segundos, com mensagem de erro quando falhar.
+
+Se persistir, abra as ferramentas de desenvolvedor do navegador (**F12 → Rede / Network**) e procure a requisição `POST /gestor/auth/login/`. Erros `401` indicam credenciais inválidas, `403` indicam falta de permissão, enquanto falhas de rede podem decorrer de endereço incorreto, servidor indisponível ou CORS.

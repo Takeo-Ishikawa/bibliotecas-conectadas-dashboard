@@ -57,3 +57,9 @@ test("logout apaga sessão mesmo com indisponibilidade do servidor", async () =>
   await auth.logout();
   assert.equal(auth.checkAuth(), false);
 });
+
+test("URL da API não configurada falha com explicação antes de enviar a requisição", async () => {
+  setup();
+  const service = new BaseService("your_api_url_here");
+  await assert.rejects(service.get("gestor/auth/me/"), /Configure VITE_API_URL/);
+});
