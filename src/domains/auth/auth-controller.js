@@ -18,7 +18,7 @@ export class AuthController {
     const response = await this.api.post("gestor/auth/login/", {
       username: String(username).trim(),
       password,
-    }, { auth: false, redirectOnUnauthorized: false });
+    }, { auth: false, redirectOnUnauthorized: false, timeoutMs: 45000 });
 
     if (!response?.token || !response?.user) {
       throw new Error("Resposta inválida do servidor de autenticação.");

@@ -27,6 +27,9 @@ export class BaseService {
 
   buildUrl(endpoint = "") {
     if (/^https?:\/\//i.test(endpoint)) return endpoint;
+    if (!/^https?:\/\/[^\s/]+/i.test(this.baseUrl)) {
+      throw new ApiError("URL da API inválida. Configure VITE_API_URL no arquivo .env e reinicie o Vite.");
+    }
     return `${this.baseUrl}/${String(endpoint).replace(/^\/+/, "")}`;
   }
 
@@ -75,8 +78,8 @@ export class BaseService {
           await new Promise(resolve => setTimeout(resolve, [1200, 3000][attempt] || 3000));
           continue;
         }
-        if (error?.name === "AbortError") throw new ApiError("A API demorou para responder. Tente novamente.");
-        if (error instanceof TypeError) throw new ApiError("Falha de conexão com a API. Verifique a rede e o servidor.");
+        if (error?.name === "AbortError") throw new ApiError("A API demorou para responder. Verifique o servidor e tente novamente.");
+        if (error instanceof TypeError) throw new ApiError("Falha de conexão com a API. Confira VITE_API_URL, a rede e a disponibilidade do servidor.");
         throw error;
       }
     }

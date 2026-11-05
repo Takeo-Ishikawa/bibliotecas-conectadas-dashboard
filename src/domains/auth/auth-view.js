@@ -42,6 +42,10 @@ export class AuthView {
   }
 
   setLoading(isLoading) {
+    if (this.loadingHintTimer) {
+      clearTimeout(this.loadingHintTimer);
+      this.loadingHintTimer = null;
+    }
     const form = document.getElementById("login-form");
     if (!form) return;
     const button = form.querySelector('button[type="submit"]');
@@ -55,6 +59,11 @@ export class AuthView {
         feedback.textContent = "Validando credenciais...";
         feedback.classList.remove("is-error", "is-success");
         feedback.classList.add("is-loading");
+        this.loadingHintTimer = setTimeout(() => {
+          if (feedback.isConnected && button.disabled) {
+            feedback.textContent = "Aguardando resposta da API... O servidor pode levar alguns instantes para iniciar.";
+          }
+        }, 8000);
       }
       return;
     }
