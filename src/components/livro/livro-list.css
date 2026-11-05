@@ -1,0 +1,7 @@
+.exemplares-unidade {
+    display: grid;
+    grid-template-columns: 12ch 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+    align-items: center;
+}

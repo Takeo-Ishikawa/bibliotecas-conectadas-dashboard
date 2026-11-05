@@ -1,0 +1,29 @@
+name: CI - webapp
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint (se existir)
+        run: |
+          if npm run | grep -q "lint"; then npm run lint; else echo "sem script lint"; fi
+
+      - name: Build
+        run: |
+          if npm run | grep -q "build"; then npm run build; else echo "sem script build"; fi

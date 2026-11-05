@@ -1,0 +1,41 @@
+.usuario-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.usuario-list-subtitle {
+  margin: 0.35rem 0 0 0;
+  max-width: 52rem;
+  opacity: 0.85;
+}
+
+.usuario-filter-form {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--muted-border-color);
+  border-radius: 8px;
+  background: var(--card-background-color);
+}
+
+.usuario-filter-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--muted-border-color);
+  background: var(--secondary-background, #f0f0f0);
+  cursor: pointer;
+  user-select: none;
+}
+
+.usuario-filter-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 640px) {
+  .usuario-filter-grid {
+    grid-template-columns: 1fr;
+  }
+}

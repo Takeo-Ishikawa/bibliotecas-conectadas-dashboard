@@ -1,0 +1,12 @@
+services:
+  frontend:
+    build:
+      context: .
+    ports:
+      - "${PORT:-5173}:5173"
+    volumes:
+      - ./.env:/app/.env:ro
+      - ./src:/app/src:ro
+    extra_hosts:
+      - "biblioteca-host:host-gateway"
+    restart: unless-stopped

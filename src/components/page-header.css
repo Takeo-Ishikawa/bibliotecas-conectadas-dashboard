@@ -1,0 +1,31 @@
+/* Cabeçalho de página com botão voltar - reutilizável */
+page-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+page-header button.page-header-back-btn {
+    min-width: 2.5rem;
+    min-height: 2.5rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+page-header h2 {
+    margin: 0;
+}
+
+page-header .page-header-subtitle {
+    margin: 0 0 0.25rem 0;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    opacity: 0.7;
+}
+
+page-header > div {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,62 @@
+/* Dropdown de ações de livros - posicionado no body */
+livro-actions-dropdown {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+}
+
+livro-actions-dropdown.is-open {
+    display: block;
+}
+
+.livro-actions-toggle {
+    margin-bottom: 0;
+}
+
+.livro-actions-menu {
+    min-width: 15rem;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 10px;
+    background: var(--color-background);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--color-text) 18%, transparent);
+    overflow: hidden;
+}
+
+.livro-action-item {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--color-text);
+    text-align: left;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    margin-bottom: 0;
+}
+
+.livro-action-item:hover,
+.livro-action-item:focus-visible {
+    background: var(--color-surface-muted);
+    outline: none;
+}
+
+.livro-action-item:active {
+    background: color-mix(in srgb, var(--color-surface-muted) 80%, var(--color-text) 10%);
+}
+
+.livro-action-item.is-danger {
+    color: var(--color-feedback-error);
+}
+
+.livro-action-item.is-danger:hover {
+    background: color-mix(in srgb, var(--color-feedback-error) 10%, transparent);
+}
+
+.livro-action-item:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

@@ -1,0 +1,22 @@
+.usuario-documento-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0.75rem;
+}
+
+.usuario-form-fields {
+  display: grid;
+  gap: 1rem;
+}
+
+.usuario-form-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .usuario-documento-row {
+    grid-template-columns: 1fr;
+  }
+}

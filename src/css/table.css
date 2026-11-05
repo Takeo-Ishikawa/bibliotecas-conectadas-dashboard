@@ -1,0 +1,100 @@
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+    table-layout: auto;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-responsive thead th {
+    background: var(--color-surface-muted);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.table-responsive tbody td {
+    white-space: nowrap;
+}
+
+/* Sticky actions column (last column) */
+.table-responsive th:last-child,
+.table-responsive td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 5;
+}
+
+.table-responsive thead th:last-child {
+    background: var(--color-surface-muted);
+    z-index: 11;
+}
+
+.table-responsive tbody td:last-child {
+    background: var(--color-background);
+    border-left: 1px solid var(--color-border-subtle);
+}
+
+.table-responsive tbody tr:hover td:last-child {
+    background: color-mix(in srgb, var(--color-primary) 3%, var(--color-background));
+}
+
+.list-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+/* Subtle scroll indicators */
+.table-responsive.is-scrollable::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 2.5rem;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 100%);
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    z-index: 9;
+}
+
+.table-responsive.is-scrollable.scrolled::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2.5rem;
+    pointer-events: none;
+    background: linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.04) 100%);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    z-index: 9;
+}
+
+/* Ensure sticky action cell fully covers underlying stripes */
+.table-responsive th:last-child,
+.table-responsive td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 20;
+    background-color: var(--color-background) !important;
+    background-clip: padding-box;
+}
+
+.table-responsive thead th:last-child {
+    z-index: 22;
+}

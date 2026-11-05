@@ -1,0 +1,52 @@
+.emprestimo-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.emprestimo-filter-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6.5rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.status-badge--aberto {
+  color: var(--color-feedback-loading);
+  border-color: color-mix(in srgb, var(--color-feedback-loading) 40%, var(--color-border-subtle));
+  background: color-mix(in srgb, var(--color-feedback-loading) 14%, var(--color-background));
+}
+
+.status-badge--devolvido {
+  color: var(--color-feedback-success);
+  border-color: color-mix(in srgb, var(--color-feedback-success) 40%, var(--color-border-subtle));
+  background: color-mix(in srgb, var(--color-feedback-success) 14%, var(--color-background));
+}
+
+@media (max-width: 640px) {
+  .emprestimo-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-badge {
+    min-width: 5.5rem;
+  }
+}

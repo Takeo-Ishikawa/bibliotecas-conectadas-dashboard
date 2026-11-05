@@ -1,0 +1,132 @@
+.livro-autocomplete {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.livro-autocomplete-label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.livro-autocomplete-control {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 9px;
+  background: var(--color-background);
+  overflow: hidden;
+}
+
+.livro-autocomplete-control:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 16%, transparent);
+}
+
+.livro-autocomplete-control[data-disabled="true"] {
+  opacity: 0.82;
+}
+
+.livro-autocomplete-control .livro-autocomplete-input {
+  border: 0;
+  box-shadow: none;
+  min-height: 2.35rem;
+  padding: 0.5rem 0.8rem;
+  background: transparent;
+  margin-bottom: 0;
+}
+
+.livro-autocomplete-control .livro-autocomplete-input:disabled {
+  cursor: not-allowed;
+}
+
+.livro-autocomplete-control .livro-autocomplete-clear {
+  border: 0;
+  border-left: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-muted);
+  color: var(--color-feedback-neutral);
+  padding-inline: 0.85rem;
+  min-width: 2.45rem;
+  margin-bottom: 0;
+}
+
+.livro-autocomplete-control .livro-autocomplete-clear:hover:not(:disabled),
+.livro-autocomplete-control .livro-autocomplete-clear:focus-visible:not(:disabled) {
+  background: color-mix(in srgb, var(--color-primary-light) 14%, var(--color-surface-muted));
+  color: var(--color-primary-darker);
+}
+
+.livro-autocomplete-spinner {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--color-feedback-neutral) 25%, transparent);
+  border-top-color: var(--color-feedback-loading);
+  animation: livro-autocomplete-spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes livro-autocomplete-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.livro-autocomplete-panel {
+  margin-top: 0.35rem;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 10px;
+  background: var(--color-background);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--color-text) 18%, transparent);
+  overflow: hidden;
+  max-height: 16rem;
+  overflow-y: auto;
+  z-index: 12;
+}
+
+.livro-autocomplete-item {
+  width: 100%;
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border-subtle) 65%, transparent);
+  background: transparent;
+  padding: 0.75rem 0.85rem;
+  color: var(--color-text);
+}
+
+.livro-autocomplete-item:last-child {
+  border-bottom: 0;
+}
+
+.livro-autocomplete-item strong {
+  font-size: 0.96rem;
+}
+
+.livro-autocomplete-item span,
+.livro-autocomplete-empty,
+.livro-autocomplete-hint {
+  color: var(--color-feedback-neutral);
+  font-size: 0.85rem;
+}
+
+.livro-autocomplete-item:hover,
+.livro-autocomplete-item:focus-visible,
+.livro-autocomplete-item.is-focused {
+  background: var(--color-surface-muted);
+  outline: none;
+}
+
+.livro-autocomplete-empty {
+  padding: 0.85rem;
+}
+
+.livro-autocomplete-hint {
+  margin: 0;
+}
+
+.livro-autocomplete-hint:empty {
+  min-height: 1.1rem;
+}

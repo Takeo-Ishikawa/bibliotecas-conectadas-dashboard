@@ -1,0 +1,44 @@
+# ───────────────────────────────────────────────
+# 🧩 LOGS
+# ───────────────────────────────────────────────
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ───────────────────────────────────────────────
+# 📦 DEPENDÊNCIAS E BUILDS
+# ───────────────────────────────────────────────
+node_modules/
+dist/
+dist-ssr/
+
+# ───────────────────────────────────────────────
+# ⚙️ ARQUIVOS DE AMBIENTE (NUNCA COMITAR)
+# ───────────────────────────────────────────────
+.env
+.env.*
+
+# mantém um exemplo genérico, se houver
+!.env.example
+
+# ───────────────────────────────────────────────
+# 💻 CONFIGURAÇÕES DE EDITOR
+# ───────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ───────────────────────────────────────────────
+# 🧪 OUTROS ARQUIVOS TEMPORÁRIOS
+# ───────────────────────────────────────────────
+*.local

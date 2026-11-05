@@ -1,0 +1,148 @@
+.livro-form-footer {
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+}
+
+.livro-detalhe-header {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.livro-detalhe-header h2 {
+    margin: 0;
+}
+
+.livro-unidade-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    align-items: flex-end;
+    width: 100%;
+    gap: 1rem;
+}
+
+.isbn-input-wrapper {
+    position: relative;
+}
+
+.isbn-input-wrapper input {
+    padding-right: 2.6rem;
+}
+
+.isbn-lookup-trigger {
+    position: absolute;
+    top: 0;
+    right: 0.55rem;
+    transform: translateY(50%);
+    width: 1.7rem;
+    height: 1.7rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-feedback-neutral);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.isbn-lookup-trigger:hover,
+.isbn-lookup-trigger:focus-visible {
+    color: var(--color-feedback-loading);
+    background: var(--color-surface-muted);
+}
+
+.isbn-input-wrapper[data-loading="true"] .isbn-lookup-trigger {
+    color: var(--color-feedback-loading);
+    cursor: progress;
+}
+
+.isbn-input-wrapper[data-loading="true"] .isbn-lookup-trigger i {
+    animation: isbn-inline-spin 0.9s linear infinite;
+}
+
+.isbn-feedback {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--color-feedback-neutral);
+    min-height: 1.1rem;
+}
+
+.isbn-feedback.is-success {
+    color: var(--color-feedback-success);
+}
+
+.isbn-feedback.is-error {
+    color: var(--color-feedback-error);
+}
+
+.isbn-feedback.is-loading {
+    color: var(--color-feedback-loading);
+}
+
+.isbn-global-loading {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--color-background) 84%, transparent);
+    z-index: 999;
+}
+
+.isbn-global-loading[hidden] {
+    display: none;
+}
+
+#livro-form {
+    position: relative;
+}
+
+.isbn-global-loading-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 0.95rem;
+    border-radius: 8px;
+    border: 1px solid var(--color-border-subtle);
+    background: var(--color-surface-muted);
+    color: var(--color-feedback-loading);
+    font-weight: 600;
+}
+
+.isbn-global-loading-spinner {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 999px;
+    border: 2px solid var(--color-border-subtle);
+    border-top-color: var(--color-feedback-loading);
+    animation: isbn-global-spin 0.9s linear infinite;
+}
+
+@keyframes isbn-global-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes isbn-inline-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .livro-unidade-header {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+}

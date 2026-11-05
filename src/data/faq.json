@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "pergunta": "Como faço para cadastrar um novo livro no sistema?",
+    "resposta": "Para cadastrar um novo livro, acesse a página 'Livros' e clique no botão '+ Adicionar Livro'. Preencha todos os campos obrigatórios como título, autor, ISBN, editora, tipo de obra e gênero. Em seguida, defina a quantidade de exemplares disponíveis em cada unidade e clique em 'Salvar'."
+  },
+  {
+    "id": 2,
+    "pergunta": "Como gerencio os exemplares de um livro em diferentes unidades?",
+    "resposta": "Na lista de livros, clique no ícone de 'lista numerada' (Exemplares por unidade) ao lado do livro desejado. Você poderá visualizar e editar a quantidade de exemplares disponíveis em cada unidade cadastrada no sistema."
+  },
+  {
+    "id": 3,
+    "pergunta": "Como faço para filtrar os livros por critérios específicos?",
+    "resposta": "Na página de 'Livros', clique em 'Filtros de Busca' para expandir o formulário de filtros. Você pode filtrar por título, autor, editora, ISBN, tipo de obra e unidade. Preencha os campos desejados e clique em 'Filtrar'. Para limpar os filtros, clique em 'Limpar Filtros'."
+  },
+  {
+    "id": 4,
+    "pergunta": "Como cadastro uma nova unidade no sistema?",
+    "resposta": "Acesse a página 'Unidades' através do menu de navegação. Clique no botão '+ Adicionar Unidade', preencha o nome da unidade e clique em 'Salvar'. A nova unidade ficará disponível para associar livros e exemplares."
+  },
+  {
+    "id": 5,
+    "pergunta": "Posso editar as informações de um livro após o cadastro?",
+    "resposta": "Sim! Na lista de livros, clique no ícone de 'editar' (lápis) ao lado do livro que deseja modificar. Atualize as informações necessárias e clique em 'Salvar' para confirmar as alterações."
+  },
+  {
+    "id": 6,
+    "pergunta": "Como visualizo os detalhes completos de um livro?",
+    "resposta": "Na lista de livros, clique no ícone de 'olho' (visualizar) ao lado do livro desejado. Você será direcionado para uma página com todas as informações detalhadas do livro, incluindo título, autor, ISBN, editora, tipo de obra, gênero e a quantidade de exemplares em cada unidade."
+  },
+  {
+    "id": 7,
+    "pergunta": "Como faço para excluir um livro do sistema?",
+    "resposta": "Na lista de livros, clique no ícone de 'lixeira' ao lado do livro que deseja excluir. Será exibida uma mensagem de confirmação. Confirme a exclusão para remover o livro permanentemente do sistema. Atenção: esta ação não pode ser desfeita."
+  },
+  {
+    "id": 8,
+    "pergunta": "O que são 'tipos de obra' e como são utilizados?",
+    "resposta": "Os tipos de obra são categorias que classificam os livros de acordo com sua natureza, como 'Livro', 'Revista', 'Periódico', 'Tese', etc. Eles ajudam a organizar e filtrar o acervo da biblioteca. Cada livro deve ter um tipo de obra associado no momento do cadastro."
+  },
+  {
+    "id": 9,
+    "pergunta": "Posso gerenciar livros de múltiplas unidades ao mesmo tempo?",
+    "resposta": "Sim! O sistema permite cadastrar a quantidade de exemplares de cada livro em todas as unidades cadastradas. Ao adicionar ou editar um livro, você pode definir quantos exemplares estão disponíveis em cada unidade individualmente."
+  },
+  {
+    "id": 10,
+    "pergunta": "Os filtros de busca são salvos quando saio da página?",
+    "resposta": "Atualmente, os filtros não são salvos automaticamente. Quando você navega para outra página e retorna à lista de livros, será necessário reaplicar os filtros desejados. Recomenda-se aplicar os filtros antes de realizar outras operações."
+  },
+  {
+    "id": 11,
+    "pergunta": "Existe um limite de livros ou unidades que posso cadastrar?",
+    "resposta": "Não há limite definido no sistema para a quantidade de livros ou unidades que você pode cadastrar. O sistema foi desenvolvido para suportar bibliotecas de diferentes tamanhos e crescer conforme a necessidade do acervo."
+  },
+  {
+    "id": 12,
+    "pergunta": "Como o sistema diferencia gêneros de tipos de obra?",
+    "resposta": "Gêneros referem-se ao conteúdo literário do livro (como Romance, Ficção Científica, História, etc.), enquanto tipos de obra classificam o formato ou natureza da publicação (como Livro, Revista, Tese, etc.). Ambos são importantes para uma catalogação completa e facilitam diferentes tipos de busca no acervo."
+  }
+]
