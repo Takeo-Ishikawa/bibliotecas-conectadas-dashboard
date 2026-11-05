@@ -1,53 +1,38 @@
 import { gestorRoutes } from "./routes-gestor.js";
 import { authRoutes } from "./routes-auth.js";
+import { dashboardRoutes } from "./routes-dashboard.js";
 import faqRoutes from "./routes-faq.js";
 
-const publicRoutes = ["/login", "/faq"];
-
-function isPublicRoute(path) {
-  return publicRoutes.some(route => path.startsWith(route));
-}
-
-function isAuthenticated(authController) {
-  return authController ? authController.checkAuth() : false;
-}
-
 export async function router({
-  gestorController,
-  gestorView,
-  authController,
-  authView,
-  navigate,
+  gestorController, gestorView, authController, authView, dashboardController, navigate,
 }) {
   const path = window.location.pathname;
-  
-  if (path.startsWith("/faq")) {
+
+  if (path === "/faq") {
     await faqRoutes(path);
     return;
   }
-  
+
   if (path === "/login") {
-    const isAuthRoute = await authRoutes({ authController, authView, navigate });
-    if (isAuthRoute) return;
-  }
-  
-  if (!isAuthenticated(authController) && !isPublicRoute(path)) {
-    navigate("/login");
+    if (await authController.ensureAuthenticated()) {
+      navigate("/dashboard");
+    } else {
+      await authRoutes({ authController, authView, navigate });
+    }
     return;
   }
-  
-  if (isAuthenticated(authController)) {
-    const isGestorRoute = await gestorRoutes({
-      gestorController,
-      gestorView,
-      navigate,
-    });
-    if (isGestorRoute) return;
+
+  if (!await authController.ensureAuthenticated()) {
+    if (window.location.pathname !== "/login") navigate("/login");
+    return;
   }
-  
-  if (isAuthenticated(authController)) {
-    navigate("/livros"); 
-  } else {
-    navigate("/login"); 
+
+  if (window.location.pathname !== path) return;
+  if (path === "/dashboard") {
+    await dashboardRoutes({ dashboardController });
+    return;
   }
+
+  const handled = await gestorRoutes({ gestorController, gestorView, navigate });
+  if (!handled && window.location.pathname === path) navigate("/dashboard");
 }

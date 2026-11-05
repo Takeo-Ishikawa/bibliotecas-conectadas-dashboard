@@ -10,6 +10,8 @@ import "./components/usuario/usuario-list.js";
 import "./components/emprestimo/emprestimo-form.js";
 import "./components/emprestimo/emprestimo-list.js";
 import "./components/app-header.js";
+import "./components/dashboard/dashboard-page.js";
+import { DashboardController } from "./domains/dashboard/dashboard-controller.js";
 import { router as appRouter } from "./routes.js";
 import { GestorController } from "./domains/gestor/gestor-controller.js";
 import { AuthController } from "./domains/auth/auth-controller.js";
@@ -19,6 +21,8 @@ import { GestorView } from "./domains/gestor/gestor-view.js";
 const gestorController = new GestorController();
 window.gestorController = gestorController;
 const authController = new AuthController();
+const dashboardController = new DashboardController();
+window.authController = authController;
 const authView = new AuthView();
 const gestorView = new GestorView();
 window.gestorView = gestorView;
@@ -30,6 +34,7 @@ function navigate(path) {
     gestorView,
     authController,
     authView,
+    dashboardController,
     navigate,
   });
   window.scrollTo(0, 0);
@@ -43,11 +48,12 @@ window.addEventListener("popstate", () =>
     gestorView,
     authController,
     authView,
+    dashboardController,
     navigate,
   })
 );
 
-appRouter({ gestorController, gestorView, authController, authView, navigate });
+appRouter({ gestorController, gestorView, authController, authView, dashboardController, navigate });
 
 // Table scroll indicators: add classes when table overflows and on scroll
 function updateTableScrollIndicators() {

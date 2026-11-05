@@ -12,6 +12,7 @@ function go(path) {
 class AppHeader extends HTMLElement {
   connectedCallback() {
     const path = window.location.pathname;
+    const isDashboard = path === "/dashboard";
     const isLivros = path.startsWith("/livros");
     const isUnidades = path.startsWith("/unidades");
     const isUsuarios = path.startsWith("/usuarios");
@@ -39,6 +40,12 @@ class AppHeader extends HTMLElement {
         </div>
         
         <ul class="side-menu-list">
+          <li>
+            <a href="#" id="menu-dashboard-btn" class="side-menu-item ${isDashboard ? 'active' : ''}">
+              <i class="fa-solid fa-chart-line"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
           <li>
             <a href="#" id="menu-livros-btn" class="side-menu-item ${isLivros ? 'active' : ''}">
               <i class="fa-solid fa-book"></i>
@@ -112,10 +119,14 @@ class AppHeader extends HTMLElement {
       closeMenu();
     };
     
-    this.querySelector("#logo-bibliotecas").onclick = (e) => {
+    this.querySelectorAll(".logo").forEach(logo => logo.onclick = (e) => {
       e.preventDefault();
-      // window.navigate && window.navigate("/livros"); // original
-      go("/livros"); // ADICIONADO
+      go("/dashboard");
+    });
+    this.querySelector("#menu-dashboard-btn").onclick = (e) => {
+      e.preventDefault();
+      closeMenu();
+      go("/dashboard");
     };
     
     this.querySelector("#menu-livros-btn").onclick = (e) => {
@@ -148,12 +159,12 @@ class AppHeader extends HTMLElement {
       window.navigate && window.navigate("/faq");
     };
     
-    this.querySelector("#menu-logout-btn").onclick = (e) => {
+    this.querySelector("#menu-logout-btn").onclick = async (e) => {
       e.preventDefault();
       closeMenu();
       if (window.confirm("Deseja realmente sair do sistema?")) {
-        localStorage.removeItem("isAuthenticated");
-        window.navigate && window.navigate("/login");
+        await window.authController?.logout();
+        go("/login");
       }
     };
   }

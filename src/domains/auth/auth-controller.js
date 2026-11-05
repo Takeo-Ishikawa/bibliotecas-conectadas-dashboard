@@ -1,187 +1,86 @@
+import { BaseService, clearStoredAuth } from "../base-service.js";
+
+const TOKEN_KEY = "authToken";
+const USER_KEY = "user";
+
 export class AuthController {
   constructor() {
-    this.isAuthenticated = false;
-    this.token = null;
+    this.api = new BaseService();
     this.user = null;
+    this.verified = false;
+    clearLegacyMockSession();
   }
 
-  /**
-   * Realiza login do usuário
-   * @param {string} username - Nome de usuário
-   * @param {string} password - Senha
-   * @returns {Promise<boolean>} - Sucesso do login
-   */
   async login(username, password) {
-    try {
-      // TODO: IMPLEMENTAR AUTENTICAÇÃO REAL COM API
-      // const response = await fetch('/api/auth/login', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ username, password })
-      // });
-      // 
-      // if (!response.ok) {
-      //   throw new Error('Credenciais inválidas');
-      // }
-      // 
-      // const data = await response.json();
-      // const token = data.token;
-      
-      // TEMPORÁRIO: Login automático sem validação
-      const token = this.generateMockToken(username);
-      
-      if (this.validateToken(token)) {
-        this.token = token;
-        this.isAuthenticated = true;
-        
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("isAuthenticated", "true");
-        
-        this.user = this.decodeToken(token);
-        localStorage.setItem("user", JSON.stringify(this.user));
-        
-        return true;
-      }
-      
-      return false;
-    } catch (error) {
-      console.error("Erro no login:", error);
-      return false;
+    if (!String(username || "").trim() || !String(password || "")) {
+      throw new Error("Informe usuário e senha.");
     }
+    const response = await this.api.post("gestor/auth/login/", {
+      username: String(username).trim(),
+      password,
+    }, { auth: false, redirectOnUnauthorized: false });
+
+    if (!response?.token || !response?.user) {
+      throw new Error("Resposta inválida do servidor de autenticação.");
+    }
+    sessionStorage.setItem(TOKEN_KEY, response.token);
+    sessionStorage.setItem(USER_KEY, JSON.stringify(response.user));
+    this.user = response.user;
+    this.verified = true;
+    return true;
   }
 
-  logout() {
-    this.isAuthenticated = false;
-    this.token = null;
-    this.user = null;
-    
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user");
-  }
-
-  /**
-   * Verifica se o usuário está autenticado
-   * @returns {boolean} - Status de autenticação
-   */
   checkAuth() {
-    const token = localStorage.getItem("authToken");
-    const storedAuth = localStorage.getItem("isAuthenticated") === "true";
-    
-    if (!storedAuth || !token) {
-      this.isAuthenticated = false;
-      return false;
-    }
-    
-    // Valida o token armazenado
-    if (this.validateToken(token)) {
-      this.token = token;
-      this.isAuthenticated = true;
-      
-      // Restaura dados do usuário
-      const userStr = localStorage.getItem("user");
-      if (userStr) {
-        this.user = JSON.parse(userStr);
+    return Boolean(sessionStorage.getItem(TOKEN_KEY));
+  }
+
+  async ensureAuthenticated() {
+    if (!this.checkAuth()) return false;
+    if (this.verified) return true;
+    try {
+      this.user = await this.api.get("gestor/auth/me/", { redirectOnUnauthorized: false });
+      sessionStorage.setItem(USER_KEY, JSON.stringify(this.user));
+      this.verified = true;
+      return true;
+    } catch (error) {
+      if (error?.status === 401 || error?.status === 403) {
+        this.clearSession();
+        return false;
       }
-      
       return true;
     }
-    
-    this.logout();
-    return false;
   }
 
-  /**
-   * Valida um JWT token
-   * @param {string} token - Token JWT
-   * @returns {boolean} - Token válido
-   */
-  validateToken(token) {
-    if (!token) return false;
-    
+  clearSession() {
+    clearStoredAuth();
+    this.user = null;
+    this.verified = false;
+  }
+
+  async logout() {
     try {
-      // TODO: IMPLEMENTAR VALIDAÇÃO REAL DO JWT
-      // - Verificar assinatura
-      // - Verificar expiração
-      // - Verificar issuer
-      // 
-      // Exemplo com biblioteca jwt-decode:
-      // const decoded = jwtDecode(token);
-      // const currentTime = Date.now() / 1000;
-      // return decoded.exp > currentTime;
-      
-      // TEMPORÁRIO: Aceita qualquer token não vazio
-      return token.length > 0;
+      if (this.checkAuth()) await this.api.post("gestor/auth/logout/", {});
     } catch (error) {
-      console.error("Erro ao validar token:", error);
-      return false;
+      console.warn("Não foi possível revogar a sessão no servidor.", error);
+    } finally {
+      this.clearSession();
     }
   }
 
-  /**
-   * Decodifica um JWT token (sem validar assinatura)
-   * @param {string} token - Token JWT
-   * @returns {object|null} - Payload decodificado
-   */
-  decodeToken(token) {
-    try {
-      // TODO: USAR BIBLIOTECA jwt-decode QUANDO IMPLEMENTAR JWT REAL
-      // import jwtDecode from 'jwt-decode';
-      // return jwtDecode(token);
-      
-      // TEMPORÁRIO: Retorna mock de dados do usuário
-      return {
-        username: "usuario_mock",
-        name: "Usuário Mock",
-        role: "admin",
-        exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) // Expira em 24h
-      };
-    } catch (error) {
-      console.error("Erro ao decodificar token:", error);
-      return null;
-    }
-  }
-
-  /**
-   * Gera um token mock para desenvolvimento
-   * @param {string} username - Nome de usuário
-   * @returns {string} - Token mock
-   */
-  generateMockToken(username) {
-    // TEMPORÁRIO: Gera um token mock base64
-    // Em produção, este token virá da API
-    const mockPayload = {
-      username: username || "usuario_mock",
-      name: "Usuário Mock",
-      role: "admin",
-      iat: Math.floor(Date.now() / 1000),
-      exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60)
-    };
-    
-    return "mock_token_" + btoa(JSON.stringify(mockPayload));
-  }
-
-  /**
-   * Obtém o token atual
-   * @returns {string|null} - Token JWT
-   */
-  getToken() {
-    return this.token || localStorage.getItem("authToken");
-  }
-
-  /**
-   * Obtém os dados do usuário autenticado
-   * @returns {object|null} - Dados do usuário
-   */
+  getToken() { return sessionStorage.getItem(TOKEN_KEY); }
   getUser() {
     if (this.user) return this.user;
-    
-    const userStr = localStorage.getItem("user");
-    if (userStr) {
-      this.user = JSON.parse(userStr);
-      return this.user;
-    }
-    
-    return null;
+    try { return JSON.parse(sessionStorage.getItem(USER_KEY) || "null"); }
+    catch { return null; }
+  }
+}
+
+function clearLegacyMockSession() {
+  if (typeof localStorage === "undefined") return;
+  const legacy = localStorage.getItem(TOKEN_KEY);
+  if (legacy?.startsWith("mock_token_") || localStorage.getItem("isAuthenticated")) {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem("user");
+    localStorage.removeItem("isAuthenticated");
   }
 }

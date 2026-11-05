@@ -33,14 +33,12 @@ export async function authRoutes({ authController, authView, navigate }) {
         try {
           // garante chamada assíncrona; ajuste se seu login retornar boolean/throw
           await authController.login(username, password);
-          navigate("/livros"); // só após sucesso
+          navigate("/dashboard"); // acesso ao painel após autenticação
         } catch (err) {
           console.error("Falha no login:", err);
           // Se seu authView tiver método para mostrar erro, use-o:
           if (typeof authView.showError === "function") {
-            authView.showError(
-              "Não foi possível entrar. Revise usuário/senha e tente novamente."
-            );
+            authView.showError(err?.message || "Não foi possível entrar. Verifique suas credenciais.");
           } else {
             alert("Não foi possível entrar. Revise usuário/senha e tente novamente.");
           }

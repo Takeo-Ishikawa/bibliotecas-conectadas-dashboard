@@ -91,14 +91,7 @@ export class GestorService extends BaseService {
   }
 
   async removerLivro(livroId) {
-    const response = await fetch(this.baseUrl + `gestor/livros/${livroId}/`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(error || `Erro ${response.status}`);
-    }
+    await this.delete(`gestor/livros/${livroId}/`);
     return true;
   }
 
@@ -107,32 +100,9 @@ export class GestorService extends BaseService {
     return this.get("gestor/unidades/");
   }
 
-  adicionarUnidade(unidadeData) {
-    const newId =
-      this.unidades.length > 0
-        ? Math.max(...this.unidades.map((u) => u.id)) + 1
-        : 1;
-    const unidade = new Unidade({ ...unidadeData, id: newId });
-    this.unidades.push(unidade);
-    return unidade;
-  }
-
-  atualizarUnidade(unidadeId, unidadeData) {
-    const index = this.unidades.findIndex((u) => u.id === unidadeId);
-    if (index !== -1) {
-      this.unidades[index] = {
-        ...this.unidades[index],
-        ...unidadeData,
-        id: unidadeId,
-      };
-      return this.unidades[index];
-    }
-    return null;
-  }
-
-  removerUnidade(unidadeId) {
-    this.unidades = this.unidades.filter((u) => u.id !== unidadeId);
-  }
+  adicionarUnidade(unidadeData) { return this.adicionarUnidadeApi(unidadeData); }
+  atualizarUnidade(id, unidadeData) { return this.atualizarUnidadeApi(id, unidadeData); }
+  removerUnidade(id) { return this.removerUnidadeApi(id); }
 
   async getUnidadeById(id) {
     return this.get(`gestor/unidades/${id}/`);
@@ -144,17 +114,7 @@ export class GestorService extends BaseService {
   }
 
   async removerUnidadeApi(unidadeId) {
-    const response = await fetch(
-      this.baseUrl + `gestor/unidades/${unidadeId}/`,
-      {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(error || `Erro ${response.status}`);
-    }
+    await this.delete(`gestor/unidades/${unidadeId}/`);
     return true;
   }
 
@@ -208,14 +168,7 @@ export class GestorService extends BaseService {
   }
 
   async removerUsuario(usuarioId) {
-    const response = await fetch(this.baseUrl + `gestor/usuarios/${usuarioId}/`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(error || `Erro ${response.status}`);
-    }
+    await this.delete(`gestor/usuarios/${usuarioId}/`);
     return true;
   }
 
@@ -262,14 +215,7 @@ export class GestorService extends BaseService {
   }
 
   async removerEmprestimo(emprestimoId) {
-    const response = await fetch(this.baseUrl + `gestor/emprestimos/${emprestimoId}/`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-    });
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(error || `Erro ${response.status}`);
-    }
+    await this.delete(`gestor/emprestimos/${emprestimoId}/`);
     return true;
   }
 }
